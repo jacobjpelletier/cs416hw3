@@ -24,3 +24,7 @@ _____________________
 ### Dependencies
 1. Bootstrap
 2. jQuery
+
+### To Run
+Download or clone project directory, open HTML view 'slots.html' in your browser.
+All JS run on client machine.
