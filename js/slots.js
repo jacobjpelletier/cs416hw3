@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    /** stored variables **/
+    /** STORED VARIABLES **/
 
     // value available to with which to make bets
     let wallet = 50;
@@ -9,10 +9,10 @@ $(document).ready(function(){
     let toggle = true;
     // array of available pics found in ../img
     const images = ["cherry.png", "grapes.png", "heart.png", "lemon.png", "orange.png", "seven.png", "strawberry.png"]
-    // lost
+    // lost (keeps track of when to stop the game)
     let lost = false;
 
-    /** UTILITIES **/
+    /** UTILITIES (note: do not relocate below event handlers) **/
 
     // toggleColor called by spin button event listener
     const toggleColor = function() {
@@ -113,7 +113,9 @@ $(document).ready(function(){
 
     // spin slot
     $('#play-game').click(function () {
+        // as long as the game is not lost
         if (!lost) {
+            // and as long as the bet is less than or equal to available funds
             if (bet <= wallet) {
                 // 1. change spin button color on click
                 toggleColor();
@@ -122,12 +124,14 @@ $(document).ready(function(){
                 changePics();
                 // 3. evaluate round results
                 checkResults();
-                // 4.
+                // 4. update stored variables
                 updateVars();
             } else {
+                // prompt the user to bet a value less than or equal to available funds
                 changeMessage(`Invalid bet amount, you do not have enough money to bet $${bet}.`);
             }
         } else {
+            // inform the user of the bad news - game over
             changeMessage(`You lost all your money.`);
         }
     })
