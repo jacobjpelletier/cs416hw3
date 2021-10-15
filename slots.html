@@ -15,7 +15,7 @@
 <!-- page components -->
 <div id="slot" class="container">
     <div class="row justify-content-center">
-        <div class="card my-4 bg-light">
+        <div class="card my-4 bg-light shadow">
             <div id="game-info">
                 <h1 class="display-3 text-primary text-center">
                     Slot Machine
@@ -28,9 +28,9 @@
                 <div class="row m-3">
                     <div class="card container bg-light">
                         <div class="row justify-content-center">
-                            <div class="card col-3 m-3"><img src="img/strawberry.png" alt="" class="img-fluid"></div>
-                            <div class="card col-3 m-3"><img src="img/cherry.png" alt="" class="img-fluid"></div>
-                            <div class="card col-3 m-3"><img src="img/seven.png" alt="" class="img-fluid"></div>
+                            <div id="img1" class="card col-3 m-3"><img src="img/strawberry.png" alt="" class="img-fluid"></div>
+                            <div id="img2" class="card col-3 m-3"><img src="img/cherry.png" alt="" class="img-fluid"></div>
+                            <div id="img3" class="card col-3 m-3"><img src="img/seven.png" alt="" class="img-fluid"></div>
                         </div>
                     </div>
                     <div class="container my-2">
@@ -47,17 +47,15 @@
                                     <button id="less" class="btn bg-danger text-light">-</button><span class="currency"> $</span><span id="bet"></span><button id="more" class="btn text-light bg-success">+</button>
                                 </h4>
                             </div>
-                            <div class="card bg-light col-lg-4 d-flex container-fluid">
+                            <div id="play-game" class="card bg-light col-lg-4 d-flex container-fluid">
                                 <div class="row justify-content-center">
-                                    <button class="btn col-5 bg-light border border-primary">
-                                        <div class="container">
+                                    <button id="play-game-button" class="btn col-4 border border-primary">
                                             <div class="d-flex flex-row justify-content-center">
-                                                <span class="py-4 text-primary">Spin</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="text-primary mt-1 bi bi-play-fill" viewBox="0 0 16 16">
+                                                <span class="play-game-button-part py-4 text-primary">Spin</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="play-game-button-part text-primary mt-1 bi bi-play-fill" viewBox="0 0 16 16">
                                                     <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
                                                 </svg>
                                             </div>
-                                        </div>
                                     </button>
                                 </div>
                             </div>
