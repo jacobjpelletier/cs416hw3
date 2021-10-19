@@ -16,6 +16,13 @@ $(document).ready(function(){
 
     /** UTILITIES (note: do not relocate below event handlers) **/
 
+    // randomNum called by ChangePics()
+        // works better without randomizing clock times
+        // pics determined by spinning instead
+    const randomNum = function(max) {
+            return Math.floor(Math.random() * (max));
+    }
+
     // toggleColor called by spin button event listener
     const toggleColor = function() {
         $('#play-game-button').toggleClass("bg-primary");
