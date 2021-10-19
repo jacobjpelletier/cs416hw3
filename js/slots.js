@@ -6,50 +6,26 @@ $(document).ready(function(){
     // value to bet
     let bet = 1;
     // toggle spin button color:
-    let toggle = true;
+    let isRunning = false;
     // array of available pics found in ../img
     const images = ["cherry.png", "grapes.png", "heart.png", "lemon.png", "orange.png", "seven.png", "strawberry.png"]
     // lost (keeps track of when to stop the game)
     let lost = false;
 
+    let index = 0;
+
     /** UTILITIES (note: do not relocate below event handlers) **/
 
     // toggleColor called by spin button event listener
     const toggleColor = function() {
-        if(toggle) {
-            $('#play-game-button').toggleClass("bg-primary");
-            $('.play-game-button-part').toggleClass("text-light");
-        }
+        $('#play-game-button').toggleClass("bg-primary");
+        $('.play-game-button-part').toggleClass("text-light");
     }
 
     // change message
     const changeMessage = function(msg) {
         $('#game-message').text(`${msg}`).addClass('text-danger').fadeTo(100, 0.1).fadeTo(200, 1.0);;
 
-    }
-
-    // changePics called by spin button event listener
-    const changePics = function () {
-        // 1. get 3 random numbers and corresponding images
-        let randoImageArray = []
-        for(let i = 0; i < 3; i++){
-            let randoNum = randomNum(images.length);
-            randoImageArray.push(images[randoNum]);
-        }
-
-        /* !!DEBUG!! */
-        //console.log(randoImageArray);
-
-        // 2. replace 3 img elements from DOM with 3 random images from randoImageArray
-        let currentImages = $('img'); // array of current images
-        for(let i = 0; i < 3; i++){
-            currentImages[i].src="img/"+randoImageArray[i]; // replace each index of currentImages array with corresponding index of randoImageArray
-        }
-    }
-
-    // randomNum called by ChangePics()
-    const randomNum = function(max) {
-        return Math.floor(Math.random() * (max));
     }
 
     // checkResults called by spin button event listener
@@ -90,24 +66,20 @@ $(document).ready(function(){
 
     // decrease bet amount
     $('#less').click(function() {
-        if (toggle === false) {
-            toggle = true;
-            toggleColor();
-        }
-        // make sure bet
-        if (bet > 1) {
-            $('#bet').text(`${--bet} `)
+        if (isRunning === false) {
+            // make sure bet is > 0
+            if (bet > 1) {
+                $('#bet').text(`${--bet} `)
+            }
         }
     })
 
     // increase bet amount
     $('#more').click(function() {
-        if (toggle === false) {
-            toggle = true;
-            toggleColor();
-        }
-        if (bet < wallet) {
-            $('#bet').text(`${++bet} `)
+        if (isRunning === false) {
+            if (bet < wallet) {
+                $('#bet').text(`${++bet} `)
+            }
         }
     })
 
@@ -117,15 +89,48 @@ $(document).ready(function(){
         if (!lost) {
             // and as long as the bet is less than or equal to available funds
             if (bet <= wallet) {
-                // 1. change spin button color on click
-                toggleColor();
-                toggle = false;
-                // 2. change pictures
-                changePics();
-                // 3. evaluate round results
-                checkResults();
-                // 4. update stored variables
-                updateVars();
+                isRunning = true;
+                if (isRunning) {
+                    toggleColor();
+                    (function () {
+                        setTimeout((first) => {
+                            console.log('a');
+                            (function () {
+                                // button click = game started
+                                setTimeout((first) => {
+                                    console.log(first);
+                                    let timer1 = setInterval(() => {
+                                        $('img')[0].src = `img/${images[index++ % images.length]}`;
+                                    }, 100);
+                                    setTimeout((second) => {
+                                        console.log(second);
+                                        clearInterval(timer1);
+                                        let timer2 = setInterval(() => {
+                                            $('img')[1].src = `img/${images[index++ % images.length]}`;
+                                        }, 100)
+                                        setTimeout((third) => {
+                                            console.log(third);
+                                            clearInterval(timer2);
+                                            let timer3 = setInterval(() => {
+                                                $('img')[2].src = `img/${images[index++ % images.length]}`;
+                                                setTimeout(() => {
+                                                    clearInterval(timer3);
+                                                }, 1000);
+                                            }, 100);
+                                        }, 3000, 3);
+                                    }, 2000, 2);
+                                }, 50, 1);
+                            })();
+                            setTimeout((second) => {
+                                console.log('b');
+                                toggleColor();
+                                checkResults();
+                                updateVars();
+                                isRunning = false;
+                            }, 7000);
+                        }, 100);
+                    })();
+                }
             } else {
                 // prompt the user to bet a value less than or equal to available funds
                 changeMessage(`Invalid bet amount, you do not have enough money to bet $${bet}.`);
@@ -135,7 +140,6 @@ $(document).ready(function(){
             changeMessage(`You lost all your money.`);
         }
     })
-
 });
 
 
